@@ -34,27 +34,6 @@
             animation: fadeIn 2s ease-out;
         }
 
-        /* Fireworks Styling */
-        .firework {
-            position: absolute;
-            width: 5px;
-            height: 5px;
-            background-color: #ffcc00;
-            border-radius: 50%;
-            animation: firework-animation 1.5s ease-out infinite;
-        }
-
-        @keyframes firework-animation {
-            0% {
-                transform: scale(1) translateY(0);
-                opacity: 1;
-            }
-            100% {
-                transform: scale(3) translateY(-300px);
-                opacity: 0;
-            }
-        }
-
         /* Glow Animation */
         @keyframes glow {
             from {
@@ -80,15 +59,14 @@
             color: #888;
         }
     </style>
+    <!-- Adding Canvas Confetti from CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
 </head>
 <body>
 
     <!-- Title and Random Message -->
     <h1>Happy Diwali!</h1>
     <p id="message"></p>
-
-    <!-- Fireworks Container -->
-    <div id="firework-container"></div>
 
     <!-- Footer -->
     <footer>
@@ -113,27 +91,20 @@
             messageElement.innerText = messages[randomIndex];
         }
 
-        // Function to Create Fireworks
-        function createFirework() {
-            const firework = document.createElement("div");
-            firework.classList.add("firework");
-            firework.style.left = Math.random() * 100 + "vw";
-            firework.style.top = Math.random() * 100 + "vh";
-            firework.style.animationDuration = Math.random() * 1.5 + 1 + "s";
-
-            document.body.appendChild(firework);
-
-            // Remove firework after animation
-            firework.addEventListener("animationend", () => {
-                firework.remove();
-            });
-        }
-
         // Display a new message each time the page loads
         displayRandomMessage();
 
-        // Generate fireworks continuously
-        setInterval(createFirework, 200);
+        // Fireworks Effect with Canvas Confetti
+        function launchConfetti() {
+            confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.6 }
+            });
+        }
+
+        // Launch multiple confetti bursts
+        setInterval(launchConfetti, 1000);
     </script>
 </body>
 </html>
