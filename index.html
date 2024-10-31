@@ -34,6 +34,27 @@
             animation: fadeIn 2s ease-out;
         }
 
+        /* Fireworks Styling */
+        .firework {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #ffcc00;
+            border-radius: 50%;
+            animation: firework-animation 2s ease-out infinite;
+        }
+
+        @keyframes firework-animation {
+            0% {
+                transform: scale(1) translateY(0);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(3) translateY(-300px);
+                opacity: 0;
+            }
+        }
+
         /* Glow Animation */
         @keyframes glow {
             from {
@@ -58,15 +79,40 @@
             font-size: 1em;
             color: #888;
         }
+
+        /* Diya and Sweets Styling */
+        .decor {
+            position: absolute;
+            max-width: 100px;
+            z-index: 1;
+        }
+        #diya1 { left: 5%; bottom: 10%; }
+        #diya2 { right: 5%; bottom: 10%; }
+        #sweet { left: 50%; bottom: 10%; transform: translateX(-50%); }
+
+        /* UNSW Logo Styling */
+        #unsw-logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            max-width: 150px;
+            z-index: 2;
+        }
     </style>
-    <!-- Adding Canvas Confetti from CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
 </head>
 <body>
+
+    <!-- UNSW Indian Society Logo -->
+    <img src="assets/unsw_indian_society_logo.png" id="unsw-logo" alt="UNSW Indian Society Logo">
 
     <!-- Title and Random Message -->
     <h1>Happy Diwali!</h1>
     <p id="message"></p>
+
+    <!-- Diya and Sweets Decor -->
+    <img src="assets/diya.png" id="diya1" class="decor" alt="Diya Lamp">
+    <img src="assets/diya.png" id="diya2" class="decor" alt="Diya Lamp">
+    <img src="assets/sweets.png" id="sweet" class="decor" alt="Sweets">
 
     <!-- Footer -->
     <footer>
@@ -91,20 +137,27 @@
             messageElement.innerText = messages[randomIndex];
         }
 
-        // Display a new message each time the page loads
-        displayRandomMessage();
+        // Fireworks Effect
+        function createFirework() {
+            const firework = document.createElement("div");
+            firework.classList.add("firework");
+            firework.style.left = Math.random() * 100 + "vw";
+            firework.style.top = Math.random() * 100 + "vh";
+            firework.style.animationDuration = Math.random() * 2 + 1 + "s";
 
-        // Fireworks Effect with Canvas Confetti
-        function launchConfetti() {
-            confetti({
-                particleCount: 100,
-                spread: 70,
-                origin: { y: 0.6 }
+            document.body.appendChild(firework);
+
+            // Remove firework after animation
+            firework.addEventListener("animationend", () => {
+                firework.remove();
             });
         }
 
-        // Launch multiple confetti bursts
-        setInterval(launchConfetti, 1000);
+        // Display a new message each time the page loads
+        displayRandomMessage();
+
+        // Generate fireworks continuously
+        setInterval(createFirework, 500);
     </script>
 </body>
 </html>
