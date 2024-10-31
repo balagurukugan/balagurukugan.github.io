@@ -5,55 +5,135 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happy Diwali!</title>
     <style>
+        /* Background Styling */
         body {
-            background-color: #000;
+            background-color: #0d0d0d;
             color: #fff;
             font-family: Arial, sans-serif;
             text-align: center;
-            padding: 50px;
+            overflow: hidden;
+            padding: 0;
+            margin: 0;
         }
+
+        /* Header Styling */
         h1 {
-            font-size: 3em;
-            margin-bottom: 20px;
+            font-size: 4em;
+            color: #ffcc00;
+            margin: 20px 0;
+            text-shadow: 2px 2px 5px #f47d0b;
+            animation: glow 1.5s ease-in-out infinite alternate;
         }
+
+        /* Random Message Styling */
+        #message {
+            font-size: 1.5em;
+            color: #ffc107;
+            margin-top: 20px;
+            text-shadow: 1px 1px 3px #ff6600;
+            animation: fadeIn 2s ease-out;
+        }
+
+        /* Fireworks Styling */
         .firework {
+            position: absolute;
             width: 5px;
             height: 5px;
-            background-color: #ff0;
-            position: absolute;
+            background-color: #ffcc00;
             border-radius: 50%;
-            animation: firework 2s ease-out infinite;
+            animation: firework-animation 1.5s ease-out infinite;
         }
-        @keyframes firework {
+
+        @keyframes firework-animation {
             0% {
                 transform: scale(1) translateY(0);
                 opacity: 1;
             }
             100% {
-                transform: scale(3) translateY(-200px);
+                transform: scale(3) translateY(-300px);
                 opacity: 0;
             }
+        }
+
+        /* Glow Animation */
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 10px #ff6600, 0 0 20px #ff6600, 0 0 30px #ffcc00, 0 0 40px #ffcc00;
+            }
+            to {
+                text-shadow: 0 0 20px #ff6600, 0 0 30px #ff6600, 0 0 40px #ffcc00, 0 0 50px #ffcc00;
+            }
+        }
+
+        /* Fade-In Animation */
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        /* Footer Styling */
+        footer {
+            position: absolute;
+            bottom: 10px;
+            width: 100%;
+            font-size: 1em;
+            color: #888;
         }
     </style>
 </head>
 <body>
+
+    <!-- Title and Random Message -->
     <h1>Happy Diwali!</h1>
-    <p>Wishing you a sparkling festival of lights!</p>
+    <p id="message"></p>
+
+    <!-- Fireworks Container -->
     <div id="firework-container"></div>
 
+    <!-- Footer -->
+    <footer>
+        Made by Bala Guru Kugan, Student from UNSW
+    </footer>
+
+    <!-- JavaScript for Fireworks and Random Messages -->
     <script>
+        // Array of Random Diwali Messages
+        const messages = [
+            "Wishing you a Diwali full of joy, health, and prosperity!",
+            "May the festival of lights illuminate your life with happiness.",
+            "Celebrate this Diwali with laughter, love, and light!",
+            "Sending warm wishes for a bright and joyous Diwali!",
+            "May this Diwali bring you peace, success, and endless joy."
+        ];
+
+        // Function to Display Random Message
+        function displayRandomMessage() {
+            const messageElement = document.getElementById("message");
+            const randomIndex = Math.floor(Math.random() * messages.length);
+            messageElement.innerText = messages[randomIndex];
+        }
+
+        // Function to Create Fireworks
         function createFirework() {
-            const firework = document.createElement('div');
-            firework.classList.add('firework');
-            firework.style.left = Math.random() * 100 + 'vw';
+            const firework = document.createElement("div");
+            firework.classList.add("firework");
+            firework.style.left = Math.random() * 100 + "vw";
+            firework.style.top = Math.random() * 100 + "vh";
+            firework.style.animationDuration = Math.random() * 1.5 + 1 + "s";
+
             document.body.appendChild(firework);
 
-            firework.addEventListener('animationend', () => {
+            // Remove firework after animation
+            firework.addEventListener("animationend", () => {
                 firework.remove();
             });
         }
 
-        setInterval(createFirework, 300);
+        // Display a new message each time the page loads
+        displayRandomMessage();
+
+        // Generate fireworks continuously
+        setInterval(createFirework, 200);
     </script>
 </body>
 </html>
